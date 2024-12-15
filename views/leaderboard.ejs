@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="content leaderboard-container">
+        <h1>Leaderboard</h1>
+
+        <!-- Leaderboard Table -->
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th id="col1">Rank</th>
+                    <th id="col2">Username</th>
+                    <th id="col3">Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach((user, index) => { %>
+                    <tr>
+                        <td id="col1"><%= index + 1 %></td> <!-- Ranks start from 1 -->
+                        <td id="col2"><%= user.username %></td> <!-- Corrected field name -->
+                        <td id="col3"><%= user.points %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

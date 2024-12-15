@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenges</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <div class="content">
+      <h1>Challenges</h1>
+      <div class="card-container">
+        <% challenges.forEach(challenge => { %>
+        <!-- Anchor tag wrapping the card -->
+        <a href="/challenge/<%= challenge.id %>" class="card-link">
+          <div class="card">
+            <h3 class="card-title"><%= challenge.title %></h3>
+            <p class="card-description"><%= challenge.description %></p>
+            <div class="card-footer">
+              <span class="card-points">
+                <span id="number"><%= challenge.category %></span>
+              </span>
+            </div>
+          </div>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

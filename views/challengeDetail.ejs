@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= challenge.title %> - Challenge Details</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    
+      <div class="challenge-detail-container">
+        <div class="challenge-category">
+          <span class="category-label"><%= challenge.category %></span>
+        </div>
+        <div class="challenge-header">
+          <h1 class="challenge-title"><%= challenge.title %></h1>
+          <div class="points">
+            <p>
+              <span class="points-number"><%= challenge.points %></span> Points
+            </p>
+          </div>
+        </div>
+
+        <!-- <div class="challenge-description">
+            <p><%= challenge.description %></p>
+        </div> -->
+        <br />
+        <div class="problem-statement">
+          <!-- <h3>Problem Statement:</h3> -->
+          <p><%= challenge.problem_statement %></p>
+        </div>
+
+        <div class="challenge-input-container">
+          <input
+            id="solution"
+            class="solution-input"
+            placeholder="Enter your flag here..."
+          />
+          <button class="submit-btn">Submit</button>
+        </div>
+
+        <!-- <a href="/" class="back-btn">Back to Challenges</a> -->
+      </div>
+  </body>
+</html>
