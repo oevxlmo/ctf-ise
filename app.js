@@ -202,10 +202,14 @@ app.get("/leaderboard", async (req, res) => {
 
     usersSnapshot.forEach((doc) => {
       const userData = doc.data();
-      users.push({ username: userData.username, points: userData.points || 0 });
+      // Ensure points are converted to a number
+      const points = Number(userData.points) || 0;
+      users.push({ username: userData.username, points });
     });
 
+    // Sort the users by points in descending order
     users.sort((a, b) => b.points - a.points);
+
     res.render("leaderboard", { user: req.session.user, users });
   } catch (error) {
     console.error("Error fetching leaderboard:", error);
@@ -213,6 +217,7 @@ app.get("/leaderboard", async (req, res) => {
     res.redirect("/");
   }
 });
+
 
 // Login/Logout Routes
 app.get("/login", blockIfAuthenticated, (req, res) => res.render("login"));
