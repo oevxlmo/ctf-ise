@@ -7,7 +7,17 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const PORT = process.env.PORT || 5000;
 // Initialize Firebase Admin with the service account key
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+if (!process.env.FIREBASE_CREDENTIALS) {
+  console.error("FIREBASE_CREDENTIALS is not defined in the environment variables!");
+  process.exit(1); // Stop the app
+}
+const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+
+
+
+// const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
