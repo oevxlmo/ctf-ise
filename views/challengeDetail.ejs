@@ -8,39 +8,56 @@
   </head>
   <body>
     <%- include('partials/header') %>
-    
-      <div class="challenge-detail-container">
-        <div class="challenge-category">
-          <span class="category-label"><%= challenge.category %></span>
-        </div>
-        <div class="challenge-header">
-          <h1 class="challenge-title"><%= challenge.title %></h1>
-          <div class="points">
-            <p>
-              <span class="points-number"><%= challenge.points %></span> Points
-            </p>
-          </div>
-        </div>
 
-        <!-- <div class="challenge-description">
+    <div class="challenge-detail-container">
+      <div class="challenge-category">
+        <span class="category-label"><%= challenge.category %></span>
+      </div>
+      <div class="challenge-header">
+        <h1 class="challenge-title"><%= challenge.title %></h1>
+        <div class="points">
+          <p>
+            <span class="points-number"><%= challenge.points %></span> Points
+          </p>
+        </div>
+      </div>
+
+      <!-- <div class="challenge-description">
             <p><%= challenge.description %></p>
         </div> -->
-        <br />
-        <div class="problem-statement">
-          <!-- <h3>Problem Statement:</h3> -->
-          <p><%= challenge.problem_statement %></p>
-        </div>
+      <br />
+      <div class="problem-statement">
+        <!-- <h3>Problem Statement:</h3> -->
+        <p><%= challenge.problem_statement %></p>
+      </div>
 
+      <!-- Wrap input and button inside a form -->
+      <form
+        action="/challenge/<%= challenge.id %>/submit"
+        method="POST"
+        class="challenge-form"
+      >
         <div class="challenge-input-container">
           <input
+            name="flag"
             id="solution"
             class="solution-input"
             placeholder="Enter your flag here..."
+            required
           />
-          <button class="submit-btn">Submit</button>
+          <button type="submit" class="submit-btn">Submit</button>
         </div>
+      </form>
 
-        <!-- <a href="/" class="back-btn">Back to Challenges</a> -->
-      </div>
+      <!-- Flash Messages -->
+<% if (messages.error) { %>
+  <div class="alert error-alert" id="yesOrNo"><%= messages.error %></div>
+<% } %>
+<% if (messages.success) { %>
+  <div class="alert success-alert" id="yesOrNo"><%= messages.success %></div>
+<% } %>
+
+      <!-- <a href="/" class="back-btn">Back to Challenges</a> -->
+    </div>
   </body>
 </html>
