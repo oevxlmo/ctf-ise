@@ -5,9 +5,9 @@ const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 const session = require("express-session");
 const flash = require("connect-flash");
-
+const PORT = process.env.PORT || 5000;
 // Initialize Firebase Admin with the service account key
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -248,6 +248,10 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.get("/write-ups", (req,res) =>{
+  res.render('write-ups');
+})
+
 app.get("/*", (req, res) => res.status(404).render("notfound"));
 
-app.listen(5000, () => console.log("Server running at http://localhost:5000"));
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

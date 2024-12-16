@@ -1,5 +1,6 @@
 /* Global reset and font */
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Nova+Square&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
@@ -49,11 +50,14 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #1b1b1b; /* Dark background */
+    background-color: #1b1b1b;
+    /* Dark background */
     color: #fff;
-    z-index: 1000; /* Ensure it stays above other elements */
+    z-index: 1000;
+    /* Ensure it stays above other elements */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Optional border */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Optional border */
 
 }
 
@@ -70,7 +74,8 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
-    color: #ff7f50; /* Orange logo */
+    color: #ff7f50;
+    /* Orange logo */
 }
 
 .navbar-links {
@@ -86,13 +91,15 @@ body {
 }
 
 .navbar-links a:hover {
-    color: #ff7f50; /* Orange on hover */
+    color: #ff7f50;
+    /* Orange on hover */
 }
 
 .navbar-profile {
     font-size: 1rem;
     font-weight: bold;
-    color: #ff7f50; /* Orange for profile */
+    color: #ff7f50;
+    /* Orange for profile */
 }
 
 /* Push content below the navbar */
@@ -112,14 +119,15 @@ h1 {
     /* Orange for the header */
 }
 
-#error{
+#error {
     text-align: center;
     font-size: 5rem;
     margin-bottom: 10px;
     margin-top: 100px;
-    color: #ff7f50; 
+    color: #ff7f50;
 }
-#errorDesc{
+
+#errorDesc {
     text-align: center;
     font-size: 2.25rem;
     color: #f5f5f5;
@@ -220,13 +228,16 @@ h1 {
     border-radius: 8px;
     margin-top: 5px;
 }
+
 /* Style for the card link */
 .card-link {
-    display:contents;
-    text-decoration: none; /* Remove default underline */
-    color: inherit; /* Inherit text color */
-  }
-  
+    display: contents;
+    text-decoration: none;
+    /* Remove default underline */
+    color: inherit;
+    /* Inherit text color */
+}
+
 /* Media Queries for responsiveness */
 @media (max-width: 1024px) {
     .card-container {
@@ -333,13 +344,15 @@ h1 {
     transition: ease-in-out;
 }
 
-#col1{
+#col1 {
     width: 150px;
 }
-#col2{
+
+#col2 {
     width: 350px;
 }
-#col3{
+
+#col3 {
     width: 250px;
 }
 
@@ -387,7 +400,7 @@ h1 {
     .challenge-detail-container {
         padding: 10px;
     }
-    
+
 }
 
 .challenge-header {
@@ -528,42 +541,46 @@ h3 {
 
 .footer {
     text-align: center;
-    background-color: #1b1b1b; /* Match the navbar's background */
+    background-color: #1b1b1b;
+    /* Match the navbar's background */
     color: #ddd;
     padding: 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
     font-size: 0.9rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Optional border */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Optional border */
 }
 
 .footer strong {
-    color: #ff7f50; /* Highlight the name */
+    color: #ff7f50;
+    /* Highlight the name */
 }
 
 /* Global Styles */
 
-  
-  /* Auth Container */
+
+/* Auth Container */
 .auth-container {
     position: relative;
     padding: 2rem;
     border-radius: 8px;
-    text-align: left; /* Align text to the left */
+    text-align: left;
+    /* Align text to the left */
     max-width: 400px;
     margin-top: 20px;
     width: 100%;
-  }
-  
-  /* Form Styles */
-  .auth-form label {
+}
+
+/* Form Styles */
+.auth-form label {
     display: block;
     margin: 1rem 0 0.5rem;
     font-size: 1rem;
-  }
-  
-  .auth-form input {
+}
+
+.auth-form input {
     width: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -572,15 +589,16 @@ h3 {
     background-color: #2a2a2a;
     color: #f5f5f5;
     font-size: 1.1rem;
-  }
-  
-  .auth-form input:focus {
+}
+
+.auth-form input:focus {
     outline: 2px solid #ff8c00;
-  }
-  
-  .auth-button {
+}
+
+.auth-button {
     display: inline-block;
-    text-align: center; /* Align button to the left */
+    text-align: center;
+    /* Align button to the left */
     background-color: #e36c40;
     color: #121212;
     font-weight: bold;
@@ -589,39 +607,43 @@ h3 {
     border: none;
     font-size: 1rem;
     margin-top: 20px;
-    width: 100%; /* Take full width */
+    width: 100%;
+    /* Take full width */
     transition: background-color 0.3s;
     cursor: pointer;
-  }
-  
-  .auth-button:hover {
+}
+
+.auth-button:hover {
     background-color: #e36c40;
-  }
-  
-  .auth-link {
+}
+
+.auth-link {
     color: #ff8c00;
     text-decoration: none;
     text-align: center;
     display: inline-block;
     margin-top: 10px;
-  }
-  .auth-container p{
-    text-align: center;
-  }
-  .auth-link:hover {
-    text-decoration: underline;
-  }
-  
-  #login, #register{
-    margin-top: 25px;
-  }
+}
 
-  .navbar button{
+.auth-container p {
+    text-align: center;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+#login,
+#register {
+    margin-top: 25px;
+}
+
+.navbar button {
     width: auto;
     padding: 10px 20px;
-  }
+}
 
-  /* Error and Success Alerts */
+/* Error and Success Alerts */
 .alert {
     padding: 10px;
     margin-bottom: 15px;
@@ -646,13 +668,47 @@ h3 {
     outline: 2px solid #28a745;
 }
 
-.profile-name{
-    margin-right: 20px  ;
+.profile-name {
+    margin-right: 20px;
 }
 
 
-#yesOrNo{
+#yesOrNo {
     /* height: 50px; */
     margin-top: 25px;
-    
+
 }
+
+#writeupInfo {
+    margin-top: 150px;
+    color: white;
+    font-size: 1.5rem;
+}
+
+
+/* Style for the countdown span */
+#countdown {
+    /* font-family: 'Courier New', Courier, m   onospace; */
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #e36c40;
+    /* Red color for the timer */
+    /* background-color: #f1c40f;  */
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.hero{
+    align-content: center;
+    justify-items: center;
+}
+.hero-heading{
+    margin-top: 150px;
+    font-size: 7rem;
+}
+
+.hero-caption{
+    font-size: 2rem;
+}
+
