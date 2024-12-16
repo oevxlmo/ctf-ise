@@ -12,7 +12,8 @@ if (!process.env.FIREBASE_CREDENTIALS) {
   console.error("FIREBASE_CREDENTIALS is not defined in the environment variables!");
   process.exit(1); // Stop the app
 }
-const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+const credentials = process.env.FIREBASE_CREDENTIALS.replace(/\\n/g, '\n');
+const serviceAccount = JSON.parse(credentials);
 
 
 
