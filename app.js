@@ -6,6 +6,7 @@ const admin = require("firebase-admin");
 const session = require("express-session");
 const flash = require("connect-flash");
 require('dotenv').config();
+const fs = require("fs");
 
 const PORT = process.env.PORT || 5000;
 // Initialize Firebase Admin with the service account key
@@ -280,6 +281,20 @@ app.get("/logout", (req, res) => {
 app.get("/write-ups", (req,res) =>{
   res.render('write-ups');
 })
+
+app.get("/robots.txt", (req, res) => {
+  const filePath = path.join(__dirname, "robots.txt"); 
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading robots.txt file:", err);
+      res.status(500).send("Error loading robots.txt");
+    } else {
+      res.type("text/plain");
+      res.send(data);
+    }
+  });
+});
+
 
 app.get("/*", (req, res) => res.status(404).render("notfound"));
 
