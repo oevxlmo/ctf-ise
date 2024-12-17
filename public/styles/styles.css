@@ -1,6 +1,6 @@
 /* Global reset and font */
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Nova+Square&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@100..800&display=swap');
 html {
     scroll-behavior: smooth;
 }
@@ -700,4 +700,19 @@ h3 {
     display: inline-block;
 }
 
+a{
+    color: #e36c40;
+}
+a::before {
+   /* Add content for the before pseudo-element */
+    /* color: #28a745; */
+}
 
+a:after {
+    /* Add content for the after pseudo-element */
+    color: #e36c40;
+}
+
+a:hover {
+    color: #f5f5f5;
+}

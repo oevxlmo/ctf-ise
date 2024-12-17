@@ -1,0 +1,7 @@
+ENCODED_FLAG="R0FMXHtVTjFRVTNfNVM0VDFDX0ZMNEd9"
+
+# Decode and reverse the flag
+FLAG=$(echo "$ENCODED_FLAG" | rev | base64 --decode)
+
+# Print the flag
+echo "Your unique CTF flag is: $FLAG"

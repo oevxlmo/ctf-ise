@@ -81,34 +81,98 @@ function blockIfAuthenticated(req, res, next) {
 
 // Static file serving
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static('public'));
+
 app.set("view engine", "ejs");
 
 const challenges = [
   {
-    id: 1,
-    title: "Challenge 1",
-    description: "Solve this CTF challenge to earn points!",
-    points: 10,
-    problem_statement: "Lorem Ipsum is simply dummy text.",
-    category: "Easy",
+    "id": 1,
+    "title": "Challenge 1",
+    "description": "You foresaw it before the event commenced",
+    "points": 10,
+    "problem_statement": "ಮುಂಬರುವ ಮೇಘಗಳನ್ನೇ ನೋಡಿ ಮಳೆ ಅನುಮಾನಿಸಬೇಕು",
+    "category": "Easy"
   },
   {
-    id: 2,
-    title: "Challenge 2",
-    description: "Another challenge awaits you.",
-    points: 20,
-    problem_statement: "This is the problem statement for challenge 2.",
-    category: "Medium",
+    "id": 2,
+    "title": "Challenge 2",
+    "description": "ZmxhZ3s2YTZ5X2tvXzZhc2VfOWFzYW5kX2hhaX0=",
+    "points": 20,
+    "problem_statement": "8^2",
+    "category": "Easy"
   },
   {
-    id: 3,
-    title: "Challenge 3",
-    description: "Complete this to increase your score.",
-    points: 30,
-    problem_statement: "This is the problem statement for challenge 3.",
-    category: "Hard",
+    "id": 3,
+    "title": "Challenge 3",
+    "description": "I Dictate the Crawlers",
+    "points": 30,
+    "problem_statement": "Henna ❌ Henn na ✅",
+    "category": "Medium"
   },
-];
+  {
+    "id": 4,
+    "title": "Challenge 4",
+    "description": "A corrupted file has been provided here, decode the flag: ",
+    "points": 40,
+    "problem_statement": "The duty of youth is to challenge corruption",
+    "category": "Medium",
+    "filePath": "./public/files/file.exe"
+  },
+  {
+    "id": 5,
+    "title": "Challenge 5",
+    "description": "Play the game :)",
+    "points": 20,
+    "problem_statement": "Khelega India Tabhi Toh Khilega India",
+    "category": "Easy",
+    "filePath": "./public/files/game.sh"
+  },
+  {
+    "id": 6,
+    "title": "Challenge 6",
+    "description": "uvce.jpeg",
+    "points": 40,
+    "problem_statement": "Hidden truths of UVCE",
+    "category": "Medium",
+     "filePath": "./public/files/uvce.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Challenge 7",
+    "description": "",
+    "points": 50,
+    "problem_statement": "ಕೇಳಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು, ನೋಡಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು",
+    "category": "Hard",
+     "filePath": "./public/files/flag.wav"
+  },
+  {
+    "id": 8,
+    "title": "Challenge 8",
+    "description": "Decode the color palette. (P.S: coders have an upperhand)",
+    "points": 50,
+    "problem_statement": "naagin bolti hai, juice PILa do",
+    "category": "Hard",
+     "filePath": "./public/files/color_img.png"
+  },
+  {
+    "id": 9,
+    "title": "Challenge 9",
+    "description": "Help me find keys!",
+    "points": 40,
+    "problem_statement": "flag.zip",
+    "category": "Medium",
+     "filePath": "./public/files/flag.zip"
+  },
+  {
+    "id": 10,
+    "title": "Challenge 10",
+    "description": "Get the flag from the website",
+    "points": 50,
+    "problem_statement": "Kuch cheezein sui ki tarah hoti hain, dard ho sakta hai, par zaroori hoti hain.",
+    "category": "Bonus"
+  }
+]
 
 // Routes
 app.get("/", (req, res) => {

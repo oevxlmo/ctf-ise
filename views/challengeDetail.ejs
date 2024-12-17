@@ -22,15 +22,19 @@
         </div>
       </div>
 
-      <!-- <div class="challenge-description">
-            <p><%= challenge.description %></p>
-        </div> -->
+    
       <br />
       <div class="problem-statement">
         <!-- <h3>Problem Statement:</h3> -->
-        <p><%= challenge.problem_statement %></p>
+        <p><%= challenge.description %></p>
       </div>
-
+      <% if (challenge && challenge.filePath) { %>
+        <!-- Extract the file name -->
+        <% const fileName = challenge.filePath.split('/').pop(); %>
+        <!-- Provide a download link with the file name as the link text -->
+        <a href="<%= challenge.filePath.replace('./public', '') %>" download><%= fileName %></a>
+      <% } %>
+      
       <!-- Wrap input and button inside a form -->
       <form
         action="/challenge/<%= challenge.id %>/submit"
