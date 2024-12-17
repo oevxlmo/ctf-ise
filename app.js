@@ -173,13 +173,15 @@ app.post("/challenge/:id/submit", isAuthenticated, async (req, res) => {
       // Check if the submitted flag is correct
       if (submittedFlag === challengeData.correct) {
         const currentPoints = userData.points || 0;
-        const newPoints = currentPoints + challengeData.points;
+
+        // Ensure points are numeric, in case it's stored as a string
+        const newPoints = currentPoints + (Number(challengeData.points) || 0);
 
         // Update user's points and mark the challenge as completed
         completedChallenges.push(challengeId);
 
         transaction.update(userRef, {
-          points: newPoints,
+          points: Number(newPoints), // Store points as a number
           completedChallenges: completedChallenges,
         });
 
@@ -199,6 +201,8 @@ app.post("/challenge/:id/submit", isAuthenticated, async (req, res) => {
   res.redirect(`/challenge/${challengeId}`);
 });
 
+
+// Leaderboard
 // Leaderboard
 app.get("/leaderboard", async (req, res) => {
   try {
@@ -207,13 +211,17 @@ app.get("/leaderboard", async (req, res) => {
 
     usersSnapshot.forEach((doc) => {
       const userData = doc.data();
-      // Ensure points are converted to a number
       const points = Number(userData.points) || 0;
-      users.push({ username: userData.username, points });
+      const completedChallenges = userData.completedChallenges || []; // Fetch completed challenges
+      users.push({
+        username: userData.username,
+        points,
+        completedChallenges, // Add completed challenges list
+      });
     });
 
     // Sort the users by points in descending order
-    users.sort((a, b) => b.points - a.points);
+    users.sort((a, b) => b.points - a.points); // Sort by points in descending order
 
     res.render("leaderboard", { user: req.session.user, users });
   } catch (error) {
@@ -222,6 +230,7 @@ app.get("/leaderboard", async (req, res) => {
     res.redirect("/");
   }
 });
+
 
 // Login/Logout Routes
 app.get("/login", blockIfAuthenticated, (req, res) => res.render("login"));
@@ -232,7 +241,13 @@ app.get("/register", blockIfAuthenticated, (req, res) => res.render("register"))
 // Login/Logout Middleware
 
 
-
+const blockIfNotAuthenticated = (req, res, next) => {
+  if (!req.session.user) {
+    req.flash("error", "Please log in to access this page.");
+    return res.redirect("/login");
+  }
+  next();
+};
 
 // Login and Register Routes
 app.get("/login", blockIfAuthenticated, (req, res) => {
