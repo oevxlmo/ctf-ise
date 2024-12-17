@@ -5,9 +5,9 @@ const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 const session = require("express-session");
 const flash = require("connect-flash");
-require('dotenv').config();
+require("dotenv").config();
 const fs = require("fs");
-
+const bcrypt = require("bcryptjs");
 const PORT = process.env.PORT || 5000;
 // Initialize Firebase Admin with the service account key
 
@@ -18,12 +18,11 @@ const PORT = process.env.PORT || 5000;
 // const credentials = process.env.FIREBASE_CREDENTIALS;
 // const serviceAccount = JSON.parse('');
 
-
 const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Fix newline formatting
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Fix newline formatting
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
   client_id: process.env.FIREBASE_CLIENT_ID,
   auth_uri: process.env.FIREBASE_AUTH_URI,
@@ -32,7 +31,6 @@ const serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
 };
 // const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
-
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -133,67 +131,73 @@ app.get("/challenge/:id", isAuthenticated, (req, res) => {
 });
 
 // Flag submission route
-app.post('/challenge/:id/submit', isAuthenticated, async (req, res) => {
-    const challengeId = req.params.id; // ID of the challenge
-    const submittedFlag = req.body.flag; // User's submitted flag
-    const userId = req.session.user.uid; // User's ID from the session
+app.post("/challenge/:id/submit", isAuthenticated, async (req, res) => {
+  const challengeId = req.params.id; // ID of the challenge
+  const submittedFlag = req.body.flag; // User's submitted flag
+  const userId = req.session.user.uid; // User's ID from the session
 
-    try {
-        // Fetch the challenge data
-        const challengeDoc = await admin.firestore().collection('challenges').doc(challengeId).get();
+  try {
+    // Fetch the challenge data
+    const challengeDoc = await admin
+      .firestore()
+      .collection("challenges")
+      .doc(challengeId)
+      .get();
 
-        if (!challengeDoc.exists) {
-            req.flash('error', 'Challenge not found!');
-            return res.redirect(`/challenge/${challengeId}`);
-        }
-
-        const challengeData = challengeDoc.data();
-
-        // Fetch user data
-        const userRef = admin.firestore().collection('users').doc(userId);
-
-        await admin.firestore().runTransaction(async (transaction) => {
-            const userDoc = await transaction.get(userRef);
-
-            if (!userDoc.exists) {
-                throw new Error('User not found!');
-            }
-
-            const userData = userDoc.data();
-            const completedChallenges = userData.completedChallenges || [];
-
-            // Check if the challenge is already completed
-            if (completedChallenges.includes(challengeId)) {
-                req.flash('error', 'You have already solved this challenge!');
-                return;
-            }
-
-            // Check if the submitted flag is correct
-            if (submittedFlag === challengeData.correct) {
-                const currentPoints = userData.points || 0;
-                const newPoints = currentPoints + challengeData.points;
-
-                // Update user's points and mark the challenge as completed
-                completedChallenges.push(challengeId);
-
-                transaction.update(userRef, {
-                    points: newPoints,
-                    completedChallenges: completedChallenges
-                });
-
-                req.flash('success', `Correct flag! You earned ${challengeData.points} points.`);
-            } else {
-                req.flash('error', 'Incorrect flag. Try again!');
-            }
-        });
-    } catch (error) {
-        console.error('Error validating flag or updating points:', error);
-        req.flash('error', 'An error occurred. Please try again later.');
+    if (!challengeDoc.exists) {
+      req.flash("error", "Challenge not found!");
+      return res.redirect(`/challenge/${challengeId}`);
     }
 
-    res.redirect(`/challenge/${challengeId}`);
-});
+    const challengeData = challengeDoc.data();
 
+    // Fetch user data
+    const userRef = admin.firestore().collection("users").doc(userId);
+
+    await admin.firestore().runTransaction(async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+
+      if (!userDoc.exists) {
+        throw new Error("User not found!");
+      }
+
+      const userData = userDoc.data();
+      const completedChallenges = userData.completedChallenges || [];
+
+      // Check if the challenge is already completed
+      if (completedChallenges.includes(challengeId)) {
+        req.flash("error", "You have already solved this challenge!");
+        return;
+      }
+
+      // Check if the submitted flag is correct
+      if (submittedFlag === challengeData.correct) {
+        const currentPoints = userData.points || 0;
+        const newPoints = currentPoints + challengeData.points;
+
+        // Update user's points and mark the challenge as completed
+        completedChallenges.push(challengeId);
+
+        transaction.update(userRef, {
+          points: newPoints,
+          completedChallenges: completedChallenges,
+        });
+
+        req.flash(
+          "success",
+          `Correct flag! You earned ${challengeData.points} points.`
+        );
+      } else {
+        req.flash("error", "Incorrect flag. Try again!");
+      }
+    });
+  } catch (error) {
+    console.error("Error validating flag or updating points:", error);
+    req.flash("error", "An error occurred. Please try again later.");
+  }
+
+  res.redirect(`/challenge/${challengeId}`);
+});
 
 // Leaderboard
 app.get("/leaderboard", async (req, res) => {
@@ -219,31 +223,27 @@ app.get("/leaderboard", async (req, res) => {
   }
 });
 
-
 // Login/Logout Routes
 app.get("/login", blockIfAuthenticated, (req, res) => res.render("login"));
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
 
-  try {
-    const userRecord = await admin.auth().getUserByEmail(email);
+app.get("/register", blockIfAuthenticated, (req, res) => res.render("register"));
 
-    req.session.user = {
-      uid: userRecord.uid,
-      displayName: userRecord.displayName,
-      email: userRecord.email,
-    };
+// Registration Route
+// Login/Logout Middleware
 
-    res.redirect("/challenges");
-  } catch (error) {
-    req.flash("error", "Invalid email or password!");
-    res.redirect("/login");
-  }
+
+
+
+// Login and Register Routes
+app.get("/login", blockIfAuthenticated, (req, res) => {
+  res.render("login", { messages: req.flash() });
 });
 
-app.get("/register", blockIfAuthenticated, (req, res) =>
-  res.render("register")
-);
+app.get("/register", blockIfAuthenticated, (req, res) => {
+  res.render("register", { messages: req.flash() });
+});
+
+// Register Route
 app.post("/register", async (req, res) => {
   const { name, username, email, password, confirmPassword } = req.body;
 
@@ -253,23 +253,74 @@ app.post("/register", async (req, res) => {
   }
 
   try {
-    const userRecord = await admin
-      .auth()
-      .createUser({ email, password, displayName: name });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userRecord = await admin.auth().createUser({
+      email,
+      password, // Required plaintext password for Firebase creation
+      displayName: name,
+    });
+
+    // Save user details to Firestore
     await admin.firestore().collection("users").doc(userRecord.uid).set({
       username,
       email,
       displayName: name,
+      hashedPassword, // Store only hashed passwords
       points: 0,
     });
 
-    req.flash("success", "Registration successful! Please login.");
+    req.flash("success", "Registration successful! Please log in.");
     res.redirect("/login");
   } catch (error) {
-    req.flash("error", "Registration failed. Try again!");
+    console.error("Registration Error:", error.message);
+    req.flash("error", "Registration failed. Please try again.");
     res.redirect("/register");
   }
 });
+
+// Login Route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const userSnapshot = await admin
+      .firestore()
+      .collection("users")
+      .where("email", "==", email)
+      .limit(1)
+      .get();
+
+    if (userSnapshot.empty) {
+      req.flash("error", "Invalid email or password.");
+      return res.redirect("/login");
+    }
+
+    const userDoc = userSnapshot.docs[0];
+    const userData = userDoc.data();
+
+    const isPasswordValid = await bcrypt.compare(password, userData.hashedPassword);
+
+    if (!isPasswordValid) {
+      req.flash("error", "Invalid email or password.");
+      return res.redirect("/login");
+    }
+
+    req.session.user = {
+      uid: userDoc.id,
+      displayName: userData.displayName,
+      email: userData.email,
+    };
+
+    req.flash("success", "Login successful!");
+    res.redirect("/challenges");
+  } catch (error) {
+    console.error("Login Error:", error.message);
+    req.flash("error", "Login failed. Please try again.");
+    res.redirect("/login");
+  }
+});
+
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -278,12 +329,12 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/write-ups", (req,res) =>{
-  res.render('write-ups');
-})
+app.get("/write-ups", (req, res) => {
+  res.render("write-ups");
+});
 
 app.get("/robots.txt", (req, res) => {
-  const filePath = path.join(__dirname, "robots.txt"); 
+  const filePath = path.join(__dirname, "robots.txt");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading robots.txt file:", err);
@@ -295,7 +346,8 @@ app.get("/robots.txt", (req, res) => {
   });
 });
 
-
 app.get("/*", (req, res) => res.status(404).render("notfound"));
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running at http://localhost:${PORT}`)
+);

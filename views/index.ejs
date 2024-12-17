@@ -3,24 +3,202 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>CyberISE - CTF Challenge</title>
     <link rel="stylesheet" href="/styles/styles.css" />
+    <style>
+      .hero {
+        align-content: center;
+        justify-items: center;
+      }
+      .hero-heading {
+        margin-top: -30px;
+        font-size: 7rem;
+      }
+
+      .hero-caption {
+        font-size: 2rem;
+      }
+
+      /* Hero Section */
+      .hero {
+        display: flex;
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        text-align: center;
+        /* background-color:#f4f4f4; */
+      }
+
+      .hero-heading {
+        /* margin-top: 150px;    */
+        font-size: 8rem;
+        font-weight: bold;
+        color: #e36c40;
+      }
+
+      .hero-caption {
+        font-size: 2.5rem;
+        color: #f5f5f5;
+      }
+
+      /* Rules Section */
+      .rules-section {
+        background-color: #1b1b1b;
+        color: #fff;
+        width: 100%;
+        padding: 60px 15px;
+      }
+
+      .rules-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 3rem;
+        color: #e36c40;
+      }
+
+      .rules-list {
+        list-style-type: none;
+        padding: 0;
+        max-width: 750px;
+        margin: 0 auto;
+      }
+
+      .rules-list li {
+        /* background: #fff; */
+        color: #f5f5f5;
+        border: 1px solid #4d4c4c;
+        margin: 10px 0;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        font-size: 1.25rem;
+      }
+
+      .rules-list li:hover {
+        border: 1px solid #e36c40;
+        cursor: pointer;
+      }
+
+      /* Features Section */
+      .features-section {
+        /* background-color: #fff; */
+        padding: 80px 20px;
+        margin-bottom: 60px;
+      }
+
+      .features-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 3rem;
+        color: #e36c40;
+      }
+
+      .features {
+        display: flex;
+        /* margin-top: 20px; */
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 60px;
+      }
+      /* 
+.feature-card {
+    background: #191919;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(30% - 20px);
+    max-width: 300px;
+    text-align: center;
+}
+.feature-card:hover{
+        border: 1px solid #e36c40;
+} */
+      .feature-card h3 {
+        margin-bottom: 15px;
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #e36c40;
+      }
+      .features {
+        justify-content: center;
+      }
+      .feature-card p {
+        color: #fff;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        padding-bottom: 10px;
+      }
+
+      h1 {
+        padding-top: 40px;
+      }
+    </style>
   </head>
   <body>
+    <!-- Include Header -->
     <%- include('partials/header') %>
+
+    <!-- Hero Section -->
     <div class="hero">
       <h1 class="hero-heading">CyberISE</h1>
       <p class="hero-caption">A 12 Hour CTF Challenge</p>
     </div>
-    <div class="benefits">
-        This is benefits :)
-    </div>
 
-    <div class="rules">
-        Here comes all the Rules :)
-    </div>
+    <!-- Rules Section -->
+    <section id="rules" class="rules-section">
+      <div class="container">
+        <h2>Rules</h2>
+        <ol class="rules-list">
+          <li>Participants must register with a valid email address.</li>
+          <li>
+            Challenges must be solved individually unless specified as
+            team-based.
+          </li>
+          <li>
+            Sharing answers or solutions publicly during the competition is
+            prohibited.
+          </li>
+          <li>
+            Use of automated tools or bots to solve challenges is strictly
+            forbidden.
+          </li>
+          <li>The decision of the organizers is final in case of disputes.</li>
+        </ol>
+      </div>
+    </section>
 
-.
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2>Benefits of CTF</h2>
+        <div class="features">
+          <div class="feature-card card">
+            <h3>Lorem Ipsum</h3>
+            <p>
+              Hone your problem-solving abilities and learn advanced concepts
+              through hands-on challenges.
+            </p>
+          </div>
+          <div class="feature-card card">
+            <h3>Lorem Ipsum</h3>
+            <p>
+              Gain a competitive edge in the cybersecurity field by practicing
+              real-world attack and defense techniques.
+            </p>
+          </div>
+          <div class="feature-card card">
+            <h3>Lorem Ipsum</h3>
+            <p>
+              Connect with like-minded individuals and professionals, building a
+              strong community around cybersecurity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <%- include('partials/footer') %>
   </body>
