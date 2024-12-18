@@ -9,14 +9,6 @@ require("dotenv").config();
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const PORT = process.env.PORT || 5000;
-// Initialize Firebase Admin with the service account key
-
-// if (!process.env.FIREBASE_CREDENTIALS) {
-//   console.error("FIREBASE_CREDENTIALS is not defined in the environment variables!");
-//   process.exit(1); // Stop the app
-// }
-// const credentials = process.env.FIREBASE_CREDENTIALS;
-// const serviceAccount = JSON.parse('');
 
 const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
@@ -160,18 +152,18 @@ const challenges = [
     "title": "Challenge 9",
     "description": "Help me find keys!",
     "points": 40,
-    "problem_statement": "flag.zip",
+    "problem_statement": "darwaza tod do daya",
     "category": "Medium",
      "filePath": "./public/files/flag.zip"
   },
-  {
-    "id": 10,
-    "title": "Challenge 10",
-    "description": "Get the flag from the website",
-    "points": 50,
-    "problem_statement": "Kuch cheezein sui ki tarah hoti hain, dard ho sakta hai, par zaroori hoti hain.",
-    "category": "Bonus"
-  }
+  // {
+  //   "id": 10,
+  //   "title": "Challenge 10",
+  //   "description": "Get the flag from the website",
+  //   "points": 50,
+  //   "problem_statement": "Kuch cheezein sui ki tarah hoti hain, dard ho sakta hai, par zaroori hoti hain.",
+  //   "category": "Bonus"
+  // }
 ]
 
 // Routes

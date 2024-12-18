@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,18 @@
 
   <title>Write-up Countdown</title>
 </head>
+
 <body>
-    <%- include ('partials/header')%>
+  <%- include ('partials/header')%>
 
   <!-- Message above the timer -->
-  <p id="writeupInfo">Write-ups will be available in </p><h1><span id="countdown"></span></h1>
+  <p id="writeupInfo">Write-ups will be available in </p>
+  <h1><span id="countdown"></span></h1>
 
   <!-- Timer Script -->
   <script>
     // Set the target date for 18th December 2024, 12 AM
-    var targetDate = new Date('December 18, 2024 00:00:00').getTime();
+    var targetDate = new Date('December 20, 2024 00:00:00').getTime();
 
     // Update the countdown every 1 second
     var countdownInterval = setInterval(function() {
@@ -34,8 +37,8 @@
       var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
       // Display the countdown in the element with id="countdown"
-      document.getElementById("countdown").innerHTML = days + "d : " + hours + "h : "
-        + minutes + "m : " + seconds + "s ";
+      document.getElementById("countdown").innerHTML = days + "d : " + hours + "h : " +
+        minutes + "m : " + seconds + "s ";
 
       // If the countdown is over, display a message
       if (timeRemaining < 0) {
@@ -44,7 +47,8 @@
       }
     }, 1000);
   </script>
-    <%- include ('partials/footer')%>
+  <%- include ('partials/footer')%>
 
 </body>
+
 </html>
