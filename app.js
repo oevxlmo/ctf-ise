@@ -152,7 +152,7 @@ const challenges = [
     "title": "Challenge 9",
     "description": "Help me find keys!",
     "points": 40,
-    "problem_statement": "darwaza tod do daya",
+    "problem_statement": "darwaza tod do daya",
     "category": "Medium",
      "filePath": "./public/files/flag.zip"
   },
