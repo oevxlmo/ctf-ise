@@ -12,28 +12,52 @@
     <div class="auth-container">
       <h1 id="register">Register</h1>
 
-      <!-- Display error or success message -->
       <% if (messages.error) { %>
-      <div class="alert error-alert">
-        <%= messages.error %>
-      </div>
-      <% } %>
-      <% if (messages.success) { %>
-      <div class="alert success-alert">
-        <%= messages.success %>
-      </div>
+      <div class="alert error-alert"><%= messages.error %></div>
+      <% } %> <% if (messages.success) { %>
+      <div class="alert success-alert"><%= messages.success %></div>
       <% } %>
 
       <form action="/register" method="POST" class="auth-form">
-        <input type="text" id="name" name="name" required placeholder="Full Name" />
-        <input type="text" id="username" name="username" required placeholder="Username" />
-        <input type="email" id="email" name="email" required placeholder="Email" />
-        <input type="password" id="password" name="password" required placeholder="Password (min 6 chars)" />
-        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm Password" />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Full Name"
+        />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          placeholder="Username"
+        />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="Password (min 6 chars)"
+        />
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          required
+          placeholder="Confirm Password"
+        />
 
         <button type="submit" class="auth-button">Register</button>
         <p>
-          Already registered? 
+          Already registered?
           <a href="/login" class="auth-link">Login</a>
         </p>
       </form>
@@ -41,12 +65,11 @@
 
     <%- include('partials/footer') %>
 
-    <!-- Scripts to auto-dismiss messages after 8 seconds -->
     <script>
       setTimeout(() => {
-        const alert = document.querySelector('.alert');
+        const alert = document.querySelector(".alert");
         if (alert) {
-          alert.style.display = 'none';
+          alert.style.display = "none";
         }
       }, 8000);
     </script>

@@ -1,7 +1,9 @@
-ENCODED_FLAG="R0FMXHtVTjFRVTNfNVM0VDFDX0ZMNEd9"
+import base64
 
-# Decode and reverse the flag
-FLAG=$(echo "$ENCODED_FLAG" | rev | base64 --decode)
+ENCODED_FLAG = "R0FMXHtVTjFRVTNfNVM0VDFDX0ZMNEd9"
 
-# Print the flag
-echo "Your unique CTF flag is: $FLAG"
+reversed_encoded_flag = ENCODED_FLAG[::-1]
+
+decoded_flag = base64.b64decode(reversed_encoded_flag).decode('utf-8')
+
+print(f"Your unique CTF flag is: {decoded_flag}")

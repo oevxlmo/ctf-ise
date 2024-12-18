@@ -11,10 +11,6 @@
     <div class="content leaderboard-container">
       <h1>Leaderboard</h1>
 
-      <!-- Leaderboard Table -->
-
-     
-
       <table class="leaderboard-table">
         <thead>
           <tr>
@@ -22,24 +18,23 @@
             <th id="col2">Username</th>
             <th id="col3">Points</th>
             <th>Solved Challenges</th>
-            <!-- New column -->
           </tr>
         </thead>
         <tbody>
           <% users.forEach((user, index) => { %>
-          <tr>  
+          <tr>
             <td id="col1"><%= index + 1 %></td>
-            <!-- Ranks start from 1 -->
+
             <td id="col2"><%= user.username %></td>
-            <!-- Corrected field name -->
+
             <td id="col3"><%= user.points %></td>
-            <!-- Rank based on sorted position -->
+
             <td>
               <% if (user.completedChallenges.length > 0) { %>
-              <ul style="list-style: none;">
+              <ul style="list-style: none">
                 <% user.completedChallenges.forEach((challenge) => { %>
                 <li><%= challenge %></li>
-                <!-- Show each challenge ID -->
+
                 <% }) %>
               </ul>
               <% } else { %> No challenges solved <% } %>

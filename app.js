@@ -73,89 +73,89 @@ function blockIfAuthenticated(req, res, next) {
 
 // Static file serving
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 
 const challenges = [
   {
-    "id": 1,
-    "title": "Challenge 1",
-    "description": "You foresaw it before the event commenced",
-    "points": 10,
-    "problem_statement": "ಮುಂಬರುವ ಮೇಘಗಳನ್ನೇ ನೋಡಿ ಮಳೆ ಅನುಮಾನಿಸಬೇಕು",
-    "category": "Easy"
+    id: 1,
+    title: "Challenge 1",
+    description: "You foresaw it before the event commenced",
+    points: 10,
+    problem_statement: "ಮುಂಬರುವ ಮೇಘಗಳನ್ನೇ ನೋಡಿ ಮಳೆ ಅನುಮಾನಿಸಬೇಕು",
+    category: "Easy",
   },
   {
-    "id": 2,
-    "title": "Challenge 2",
-    "description": "ZmxhZ3s2YTZ5X2tvXzZhc2VfOWFzYW5kX2hhaX0=",
-    "points": 20,
-    "problem_statement": "8^2",
-    "category": "Easy"
+    id: 2,
+    title: "Challenge 2",
+    description: "ZmxhZ3s2YTZ5X2tvXzZhc2VfOWFzYW5kX2hhaX0=",
+    points: 20,
+    problem_statement: "8^2",
+    category: "Easy",
   },
   {
-    "id": 3,
-    "title": "Challenge 3",
-    "description": "I Dictate the Crawlers",
-    "points": 30,
-    "problem_statement": "Henna ❌ Henn na ✅",
-    "category": "Medium"
+    id: 3,
+    title: "Challenge 3",
+    description: "I Dictate the Crawlers",
+    points: 30,
+    problem_statement: "Henna ❌ Henn na ✅",
+    category: "Medium",
   },
   {
-    "id": 4,
-    "title": "Challenge 4",
-    "description": "A corrupted file has been provided here, decode the flag: ",
-    "points": 40,
-    "problem_statement": "The duty of youth is to challenge corruption",
-    "category": "Medium",
-    "filePath": "./public/files/file.exe"
+    id: 4,
+    title: "Challenge 4",
+    description: "Sir M. Visvesvaraya wants to meet Stegan San!",
+    points: 40,
+    problem_statement: "Hidden truths of UVCE",
+    category: "Medium",
+    filePath: "./public/files/uvce.jpg",
   },
   {
-    "id": 5,
-    "title": "Challenge 5",
-    "description": "Play the game :)",
-    "points": 20,
-    "problem_statement": "Khelega India Tabhi Toh Khilega India",
-    "category": "Easy",
-    "filePath": "./public/files/game.sh"
+    id: 5,
+    title: "Challenge 5",
+    description: "",
+    points: 50,
+    problem_statement: "ಕೇಳಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು, ನೋಡಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು",
+    category: "Hard",
+    filePath: "./public/files/flag.wav",
   },
   {
-    "id": 6,
-    "title": "Challenge 6",
-    "description": "uvce.jpeg",
-    "points": 40,
-    "problem_statement": "Hidden truths of UVCE",
-    "category": "Medium",
-     "filePath": "./public/files/uvce.jpg"
+    id: 6,
+    title: "Challenge 6",
+    description: "Decode the color palette. (P.S: coders have an upperhand)",
+    points: 50,
+    problem_statement: "naagin bolti hai, juice PILa do",
+    category: "Hard",
+    filePath: "./public/files/color_img.png",
   },
   {
-    "id": 7,
-    "title": "Challenge 7",
-    "description": "",
-    "points": 50,
-    "problem_statement": "ಕೇಳಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು, ನೋಡಿದ್ದು ಸುಳ್ಳಾಗ ಬಹುದು",
-    "category": "Hard",
-     "filePath": "./public/files/flag.wav"
+    id: 7,
+    title: "Challenge 7",
+    description: "Help me find keys!",
+    points: 40,
+    problem_statement: "darwaza tod do daya",
+    category: "Medium",
+    filePath: "./public/files/flag.zip",
   },
-  {
-    "id": 8,
-    "title": "Challenge 8",
-    "description": "Decode the color palette. (P.S: coders have an upperhand)",
-    "points": 50,
-    "problem_statement": "naagin bolti hai, juice PILa do",
-    "category": "Hard",
-     "filePath": "./public/files/color_img.png"
-  },
-  {
-    "id": 9,
-    "title": "Challenge 9",
-    "description": "Help me find keys!",
-    "points": 40,
-    "problem_statement": "darwaza tod do daya",
-    "category": "Medium",
-     "filePath": "./public/files/flag.zip"
-  },
+  // {
+  //   id: 8,
+  //   title: "Challenge 8",
+  //   description: "A corrupted file has been provided here, decode the flag: ",
+  //   points: 40,
+  //   problem_statement: "The duty of youth is to challenge corruption",
+  //   category: "Medium",
+  //   filePath: "./public/files/file.exe",
+  // },
+  // {
+  //   id: 9,
+  //   title: "Challenge 9",
+  //   description: "Play the game :)",
+  //   points: 20,
+  //   problem_statement: "Khelega India Tabhi Toh Khilega India",
+  //   category: "Easy",
+  //   filePath: "./public/files/game.sh",
+  // },
   // {
   //   "id": 10,
   //   "title": "Challenge 10",
@@ -164,7 +164,7 @@ const challenges = [
   //   "problem_statement": "Kuch cheezein sui ki tarah hoti hain, dard ho sakta hai, par zaroori hoti hain.",
   //   "category": "Bonus"
   // }
-]
+];
 
 // Routes
 app.get("/", (req, res) => {
@@ -257,7 +257,6 @@ app.post("/challenge/:id/submit", isAuthenticated, async (req, res) => {
   res.redirect(`/challenge/${challengeId}`);
 });
 
-
 // Leaderboard
 // Leaderboard
 app.get("/leaderboard", async (req, res) => {
@@ -287,15 +286,15 @@ app.get("/leaderboard", async (req, res) => {
   }
 });
 
-
 // Login/Logout Routes
 app.get("/login", blockIfAuthenticated, (req, res) => res.render("login"));
 
-app.get("/register", blockIfAuthenticated, (req, res) => res.render("register"));
+app.get("/register", blockIfAuthenticated, (req, res) =>
+  res.render("register")
+);
 
 // Registration Route
 // Login/Logout Middleware
-
 
 const blockIfNotAuthenticated = (req, res, next) => {
   if (!req.session.user) {
@@ -370,7 +369,10 @@ app.post("/login", async (req, res) => {
     const userDoc = userSnapshot.docs[0];
     const userData = userDoc.data();
 
-    const isPasswordValid = await bcrypt.compare(password, userData.hashedPassword);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      userData.hashedPassword
+    );
 
     if (!isPasswordValid) {
       req.flash("error", "Invalid email or password.");
@@ -391,7 +393,6 @@ app.post("/login", async (req, res) => {
     res.redirect("/login");
   }
 });
-
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= challenge.title %> - Challenge Details</title>
+    <title><%= challenge.id %> - Challenge</title>
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
   <body>
@@ -12,7 +12,7 @@
     <div class="challenge-detail-container">
       <div class="challenge-category">
         <span class="category-label"><%= challenge.category %></span>
-      </div>  
+      </div>
       <div class="challenge-header">
         <h1 class="challenge-title"><%= challenge.title %></h1>
         <div class="points">
@@ -22,20 +22,17 @@
         </div>
       </div>
 
-    
       <br />
       <div class="problem-statement">
-        <!-- <h3>Problem Statement:</h3> -->
         <p><%= challenge.description %></p>
       </div>
-      <% if (challenge && challenge.filePath) { %>
-        <!-- Extract the file name -->
-        <% const fileName = challenge.filePath.split('/').pop(); %>
-        <!-- Provide a download link with the file name as the link text -->
-        <a href="<%= challenge.filePath.replace('./public', '') %>" download><%= fileName %></a>
+      <% if (challenge && challenge.filePath) { %> <% const fileName =
+      challenge.filePath.split('/').pop(); %>
+      <a href="<%= challenge.filePath.replace('./public', '') %>" download
+        ><%= fileName %></a
+      >
       <% } %>
-      
-      <!-- Wrap input and button inside a form -->
+
       <form
         action="/challenge/<%= challenge.id %>/submit"
         method="POST"
@@ -53,15 +50,13 @@
         </div>
       </form>
 
-      <!-- Flash Messages -->
-<% if (messages.error) { %>
-  <div class="alert error-alert" id="yesOrNo"><%= messages.error %></div>
-<% } %>
-<% if (messages.success) { %>
-  <div class="alert success-alert" id="yesOrNo"><%= messages.success %></div>
-<% } %>
-
-      <!-- <a href="/" class="back-btn">Back to Challenges</a> -->
+      <% if (messages.error) { %>
+      <div class="alert error-alert" id="yesOrNo"><%= messages.error %></div>
+      <% } %> <% if (messages.success) { %>
+      <div class="alert success-alert" id="yesOrNo">
+        <%= messages.success %>
+      </div>
+      <% } %>
     </div>
   </body>
 </html>

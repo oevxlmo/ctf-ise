@@ -8,17 +8,16 @@
       <a href="/leaderboard">Leaderboard</a>
       <a href="/write-ups">Write-Ups</a>
     </nav>
-    
-    <!-- Conditionally render login button or username based on the session -->
-    <% if (user) { %> <!-- If the user is logged in -->
-      <div class="navbar-profile">
-        <span class="profile-name">Welcome, <%= user.displayName %></span>
-        <a href="/logout"><button class="submit-btn">Logout</button></a>
-      </div>
-    <% } else { %> <!-- If the user is not logged in -->
-      <a href="/login">
-        <button class="submit-btn">Login</button>
-      </a>
+
+    <% if (user) { %>
+    <div class="navbar-profile">
+      <span class="profile-name">Welcome, <%= user.displayName %></span>
+      <a href="/logout"><button class="submit-btn">Logout</button></a>
+    </div>
+    <% } else { %>
+    <a href="/login">
+      <button class="submit-btn">Login</button>
+    </a>
     <% } %>
   </div>
 </header>
