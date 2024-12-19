@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/styles.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/styles/styles.css" />
+    <title>Write-ups</title>
+  </head>
 
-  <title>Write-ups</title>
-</head>
+  <body>
+    <%- include ('partials/header')%>
 
-<body>
-  <%- include ('partials/header')%>
+    <p id="writeupInfo">Write-ups will be available in</p>
+    <h1><span id="countdown"></span></h1>
 
-  <p id="writeupInfo">Write-ups will be available in</p>
-  <h1><span id="countdown"></span></h1>
+    <script>
+      var targetDate = new Date("December 20, 2024 00:00:00").getTime();
 
-  <script>
-    var targetDate = new Date("December 20, 2024 00:00:00").getTime();
+      var countdownInterval = setInterval(function () {
+        var currentDate = new Date().getTime();
 
-    var countdownInterval = setInterval(function() {
-      var currentDate = new Date().getTime();
+        var timeRemaining = targetDate - currentDate;
 
-      var timeRemaining = targetDate - currentDate;
+        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(
+          (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor(
+          (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      var hours = Math.floor(
-        (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var minutes = Math.floor(
-        (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML =
-        days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s ";
-
-      if (timeRemaining < 0) {
-        clearInterval(countdownInterval);
         document.getElementById("countdown").innerHTML =
-          "The write-up is now available!";
-      }
-    }, 1000);
-  </script>
-  <%- include ('partials/footer')%>
-</body>
+          days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s ";
 
+        if (timeRemaining < 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdown").innerHTML =
+            "The write-up is now available!";
+        }
+      }, 1000);
+    </script>
+    <%- include ('partials/footer')%>
+  </body>
 </html>

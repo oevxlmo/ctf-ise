@@ -8,6 +8,11 @@ const flash = require("connect-flash");
 require("dotenv").config();
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
+const cookieParser = require('cookie-parser');
+
+// Use cookie-parser middleware to parse cookies
+app.use(cookieParser());
+
 const PORT = process.env.PORT || 5000;
 
 const serviceAccount = {
@@ -138,6 +143,24 @@ const challenges = [
     category: "Medium",
     filePath: "./public/files/flag.zip",
   },
+  {
+    id: 8,
+    title: "Challenge 8",
+    description: "6763c5a8-d950-8001-83bd-070b2b19505d",
+    points: 40,
+    problem_statement: "Sharing is Caring!",
+    category: "Medium",
+    filePath: "./public/files/flag.zip",
+  },
+  {
+    id: 9,
+    title: "Challenge 9",
+    description: "Can you give me one please 😋",
+    points: 40,
+    problem_statement: "A Jar full of Biscuits :)",
+    category: "Medium",
+    filePath: "./public/files/flag.zip",
+  },
   // {
   //   id: 8,
   //   title: "Challenge 8",
@@ -168,12 +191,23 @@ const challenges = [
 
 // Routes
 app.get("/", (req, res) => {
+ 
+
+  // Render the 'index' page
   res.render("index", { challenges });
 });
 
 app.get("/challenges", isAuthenticated, (req, res) => {
+  // Check if the user is authorized by verifying the 'auth' cookie
+  const isAuthorized = req.cookies.auth === 'true'; // Check for 'auth' cookie
+
+  if (isAuthorized) {
+    const flag = Buffer.from("flag{c00k1es_are_tasty}").toString("base64");
+    res.cookie("ZmxhZz0", flag, { path: "/", secure: true, httpOnly: true });
+  }
   res.render("challenges", { challenges });
 });
+
 
 app.get("/challenge/:id", isAuthenticated, (req, res) => {
   const challengeId = parseInt(req.params.id);
@@ -385,6 +419,9 @@ app.post("/login", async (req, res) => {
       email: userData.email,
     };
 
+    // Set the auth cookie
+    res.cookie("auth", "true", { path: "/", secure: true, httpOnly: true });
+
     req.flash("success", "Login successful!");
     res.redirect("/challenges");
   } catch (error) {
@@ -393,6 +430,7 @@ app.post("/login", async (req, res) => {
     res.redirect("/login");
   }
 });
+
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
