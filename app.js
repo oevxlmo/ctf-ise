@@ -301,16 +301,19 @@ app.get("/leaderboard", async (req, res) => {
     usersSnapshot.forEach((doc) => {
       const userData = doc.data();
       const points = Number(userData.points) || 0;
-      const completedChallenges = userData.completedChallenges || []; // Fetch completed challenges
+      const completedChallenges = (userData.completedChallenges || []).sort(
+        (a, b) => a - b // Sort the completedChallenges array numerically in ascending order
+      );
+
       users.push({
         username: userData.username,
         points,
-        completedChallenges, // Add completed challenges list
+        completedChallenges, // Sorted completed challenges
       });
     });
 
     // Sort the users by points in descending order
-    users.sort((a, b) => b.points - a.points); // Sort by points in descending order
+    users.sort((a, b) => b.points - a.points);
 
     res.render("leaderboard", { user: req.session.user, users });
   } catch (error) {
@@ -319,6 +322,7 @@ app.get("/leaderboard", async (req, res) => {
     res.redirect("/");
   }
 });
+
 
 // Login/Logout Routes
 app.get("/login", blockIfAuthenticated, (req, res) => res.render("login"));
