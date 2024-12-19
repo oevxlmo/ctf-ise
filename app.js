@@ -150,7 +150,7 @@ const challenges = [
     points: 10,
     problem_statement: "Sharing is Caring!",
     category: "Bonus - Easy",
-    filePath: "./public/files/flag.zip",
+    // filePath: "./public/files/flag.zip",
   },
   {
     id: 9,
@@ -159,7 +159,7 @@ const challenges = [
     points: 30,
     problem_statement: "A Jar full of Biscuits :)",
     category: "Bonus - Medium",
-    filePath: "./public/files/flag.zip",
+    // filePath: "./public/files/flag.zip",
   },
   // {
   //   id: 8,
