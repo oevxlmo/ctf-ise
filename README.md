@@ -1,8 +1,8 @@
-# ctf-ise
+# CyberISE - A 12-Hour CTF Challenge
 
 ## Overview
 
-**ctf-ise** is a web application designed to host Capture The Flag (CTF) challenges, providing an interactive platform for users to engage in cybersecurity exercises. The application is built using Node.js and Express.js, with Firebase integration for data storage and management.
+**CyberISE** is a web application designed to host Capture The Flag (CTF) challenges, providing an interactive platform for users to engage in cybersecurity exercises. The application is built using Node.js and Express.js, with Firebase integration for data storage and management.
 
 ## Features
 
