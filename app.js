@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 // Use cookie-parser middleware to parse cookies
 app.use(cookieParser());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Check if all required Firebase environment variables are set
 const requiredFirebaseEnvVars = [
@@ -68,10 +68,13 @@ try {
 // Session setup
 app.use(
   session({
-    secret: "your-session-secret",
+    secret: process.env.SESSION_SECRET || "your-session-secret",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // Use 'true' in production with HTTPS
+    cookie: { 
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    },
   })
 );
 
@@ -493,6 +496,12 @@ app.get("/robots.txt", (req, res) => {
 
 app.get("/*", (req, res) => res.status(404).render("notfound"));
 
-app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
-);
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () =>
+    console.log(`Server running at http://localhost:${PORT}`)
+  );
+}
+
+// Export the Express app for Vercel
+module.exports = app;

@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "build": "echo 'No build step required'",
     "dev": "nodemon app.js",
     "demo": "node app-demo.js",
     "demo:dev": "nodemon app-demo.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "echo 'Vercel build complete'"
   },
   "keywords": [
     "CTF",
@@ -30,5 +32,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
