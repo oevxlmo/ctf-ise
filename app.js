@@ -15,6 +15,31 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 5000;
 
+// Check if all required Firebase environment variables are set
+const requiredFirebaseEnvVars = [
+  'FIREBASE_TYPE',
+  'FIREBASE_PROJECT_ID', 
+  'FIREBASE_PRIVATE_KEY_ID',
+  'FIREBASE_PRIVATE_KEY',
+  'FIREBASE_CLIENT_EMAIL',
+  'FIREBASE_CLIENT_ID'
+];
+
+const missingEnvVars = requiredFirebaseEnvVars.filter(envVar => !process.env[envVar] || process.env[envVar].includes('your-'));
+
+if (missingEnvVars.length > 0) {
+  console.error('❌ Firebase configuration incomplete!');
+  console.error('Missing or placeholder environment variables:', missingEnvVars);
+  console.error('\n📝 To run this application, you need to:');
+  console.error('1. Create a Firebase project at https://console.firebase.google.com/');
+  console.error('2. Enable Firestore and Authentication services');
+  console.error('3. Go to Project Settings > Service Accounts');
+  console.error('4. Generate a new private key (JSON file)');
+  console.error('5. Update the .env file with your Firebase credentials');
+  console.error('\n🔍 Check the .env file and replace all placeholder values with your actual Firebase credentials.');
+  process.exit(1);
+}
+
 const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -27,12 +52,18 @@ const serviceAccount = {
   auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
 };
-// const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://ctf-ise.firebaseio.com",
-});
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com`,
+  });
+  console.log('✅ Firebase initialized successfully');
+} catch (error) {
+  console.error('❌ Failed to initialize Firebase:', error.message);
+  console.error('\n🔍 Please check your Firebase credentials in the .env file');
+  process.exit(1);
+}
 
 // Session setup
 app.use(
