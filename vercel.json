@@ -2,31 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.js",
+      "src": "api/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/public/(.*)",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/app.js"
+      "dest": "/api/index.js"
     }
   ],
-  "env": {
-    "FIREBASE_TYPE": "@firebase_type",
-    "FIREBASE_PROJECT_ID": "@firebase_project_id",
-    "FIREBASE_PRIVATE_KEY_ID": "@firebase_private_key_id",
-    "FIREBASE_PRIVATE_KEY": "@firebase_private_key",
-    "FIREBASE_CLIENT_EMAIL": "@firebase_client_email",
-    "FIREBASE_CLIENT_ID": "@firebase_client_id",
-    "FIREBASE_AUTH_URI": "@firebase_auth_uri",
-    "FIREBASE_TOKEN_URI": "@firebase_token_uri",
-    "FIREBASE_AUTH_PROVIDER_CERT_URL": "@firebase_auth_provider_cert_url",
-    "FIREBASE_CLIENT_CERT_URL": "@firebase_client_cert_url",
-    "SESSION_SECRET": "@session_secret"
-  },
   "functions": {
-    "app.js": {
+    "api/index.js": {
       "maxDuration": 30
     }
   }

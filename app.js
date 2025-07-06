@@ -30,14 +30,18 @@ const missingEnvVars = requiredFirebaseEnvVars.filter(envVar => !process.env[env
 if (missingEnvVars.length > 0) {
   console.error('❌ Firebase configuration incomplete!');
   console.error('Missing or placeholder environment variables:', missingEnvVars);
-  console.error('\n📝 To run this application, you need to:');
-  console.error('1. Create a Firebase project at https://console.firebase.google.com/');
-  console.error('2. Enable Firestore and Authentication services');
-  console.error('3. Go to Project Settings > Service Accounts');
-  console.error('4. Generate a new private key (JSON file)');
-  console.error('5. Update the .env file with your Firebase credentials');
-  console.error('\n🔍 Check the .env file and replace all placeholder values with your actual Firebase credentials.');
-  process.exit(1);
+  
+  // In production, don't exit - let Vercel handle the error gracefully
+  if (process.env.NODE_ENV !== 'production') {
+    console.error('\n📝 To run this application, you need to:');
+    console.error('1. Create a Firebase project at https://console.firebase.google.com/');
+    console.error('2. Enable Firestore and Authentication services');
+    console.error('3. Go to Project Settings > Service Accounts');
+    console.error('4. Generate a new private key (JSON file)');
+    console.error('5. Update the .env file with your Firebase credentials');
+    console.error('\n🔍 Check the .env file and replace all placeholder values with your actual Firebase credentials.');
+    process.exit(1);
+  }
 }
 
 const serviceAccount = {
@@ -54,15 +58,24 @@ const serviceAccount = {
 };
 
 try {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com`,
-  });
+  // Only initialize if not already initialized (for serverless environments)
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com`,
+    });
+  }
   console.log('✅ Firebase initialized successfully');
 } catch (error) {
   console.error('❌ Failed to initialize Firebase:', error.message);
-  console.error('\n🔍 Please check your Firebase credentials in the .env file');
-  process.exit(1);
+  
+  // In production, don't exit - let Vercel handle the error gracefully
+  if (process.env.NODE_ENV !== 'production') {
+    console.error('\n🔍 Please check your Firebase credentials in the .env file');
+    process.exit(1);
+  } else {
+    console.error('🔄 Continuing with limited functionality...');
+  }
 }
 
 // Session setup
@@ -70,11 +83,14 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || "your-session-secret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { 
-      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     },
+    name: 'ctf-session'
   })
 );
 
@@ -496,8 +512,8 @@ app.get("/robots.txt", (req, res) => {
 
 app.get("/*", (req, res) => res.status(404).render("notfound"));
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
+// For local development only (not when imported as module)
+if (require.main === module) {
   app.listen(PORT, () =>
     console.log(`Server running at http://localhost:${PORT}`)
   );
